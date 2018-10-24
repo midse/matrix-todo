@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"time"
 
+	docopt "github.com/docopt/docopt-go"
 	ui "github.com/gizak/termui"
 )
 
@@ -18,6 +19,27 @@ var focusOnTask = regexp.MustCompile(`\[(.*?)\]\(` + focusTaskColor + `\)`)
 var currentBoard int
 
 func main() {
+
+	usage := `Matrix Todo - Simplistic todo list app
+
+Usage:
+	matrix-todo [ (-f|--file) <data-file> ] [ (-e|--encrypt) | (-d|--decrypt)]
+	matrix-todo [ help | -h | --help ]
+	matrix-todo [ version | -v | -V | --version ]
+
+Options:
+	-h --help        Show this screen.
+	-v --version     Show version.
+	-f --file        Read/write data to this file (default: ./data.json).
+	-e --encrypt     Encrypt data file using a password.
+	-d --decrypt     Decrypt data file using a password.
+
+Examples:
+    # Use a custom location for data and decrypt its content
+    $ matrix-todo --file ~/Documents/my_todo_list --decrypt`
+
+	arguments, _ := docopt.ParseDoc(usage)
+
 	logFile, err := os.OpenFile("matrix-todo.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	if err != nil {
@@ -27,6 +49,8 @@ func main() {
 	defer logFile.Close()
 
 	logger = log.New(logFile, "", log.LstdFlags)
+
+	logger.Println(arguments)
 
 	content := loadData()
 
