@@ -6,6 +6,13 @@
 
 Built just for fun using Golang and [termui](https://github.com/gizak/termui), almost too simplistic to be useful (for now). I was tired of sketching [Eisenhower Matrices](https://en.wikipedia.org/wiki/Time_management#The_Eisenhower_Method) on my notebook.
 
+If you want to test this app, clone the repo and run the following commands :
+
+```bash
+cp data.example.json data.json
+go run *.go
+```
+
 ## To do
 
 + Task edition : description, due date
