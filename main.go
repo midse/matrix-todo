@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -247,7 +248,8 @@ func saveData(content Content) {
 	bytes, err := json.Marshal(content)
 
 	if err != nil {
-		logger.Println("Unable to marshal json")
+		fmt.Fprintln(os.Stderr, "Unable to marshal json")
+		os.Exit(1)
 	}
 
 	ioutil.WriteFile(dataFile, bytes, 0644)
@@ -259,9 +261,15 @@ func loadData() Content {
 	jsonData, err := ioutil.ReadFile(dataFile)
 
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "Unable to read data file : '%s'\n", dataFile)
+		os.Exit(1)
 	}
-	json.Unmarshal(jsonData, &content)
+	err = json.Unmarshal(jsonData, &content)
+
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Unable to parse JSON data")
+		os.Exit(1)
+	}
 
 	return content
 }
@@ -287,20 +295,22 @@ func rerender(boardStruct Board, rows []*ui.Row, blocks []*ui.List, focusedBlock
 }
 
 func main() {
-	f, err := os.OpenFile("text.log",
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-	}
-	defer f.Close()
+	logFile, err := os.OpenFile("matrix-todo.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
-	logger = log.New(f, "", log.LstdFlags)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Unable to create log file")
+		os.Exit(1)
+	}
+	defer logFile.Close()
+
+	logger = log.New(logFile, "", log.LstdFlags)
 
 	content := loadData()
 
 	err = ui.Init()
 	if err != nil {
-		panic(err)
+		fmt.Fprintln(os.Stderr, "Unable to initialize UI")
+		os.Exit(1)
 	}
 	defer ui.Close()
 

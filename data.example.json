@@ -65,7 +65,7 @@
                     "block_tasks": []}
 
             ]
-        }
+        },
         {
             "board_name": "Weekly",
             "board_type": "eisenhower_matrix",
