@@ -2,6 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/midse/matrix-todo)](https://goreportcard.com/report/github.com/midse/matrix-todo)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/midse)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/midse/matrix-todo/blob/master/LICENSE)
 
 Built just for fun using Golang and [termui](https://github.com/gizak/termui), almost too simplistic to be useful (for now). I was tired of sketching [Eisenhower Matrices](https://en.wikipedia.org/wiki/Time_management#The_Eisenhower_Method) on my notebook.
 
