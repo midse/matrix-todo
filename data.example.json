@@ -1,0 +1,71 @@
+{
+    "author": "Dimitri",
+    "mail": "root@ohmyrock.fr",
+    "boards": [
+        {
+            "board_name": "Daily",
+            "board_type": "eisenhower_matrix",
+            "board_last_update": "2018-10-16 00:12:34",
+            "board_blocks": [
+                {
+                    "block_name": "Urgent/Important",
+                    "block_type": "list",
+                    "block_tasks": [
+                    {
+                        "task_id": 1,
+                        "task_name": "Super task",
+                        "task_description": "Ceci est une super task",
+                        "task_creation_date":"2018-10-16 00:12:34",
+                        "task_due_date":"2018-11-17 09:12:34",
+                        "task_status": "TODO"
+                    },
+                    {
+                        "task_id": 2,
+                        "task_name": "Awesome task",
+                        "task_description": "Ceci est une awesome task",
+                        "task_creation_date":"2018-10-16 00:12:34",
+                        "task_due_date":"2018-11-17 09:12:34",
+                        "task_status": "DONE"
+                    },
+                    {
+                        "task_id": 3,
+                        "task_name": "Cool task",
+                        "task_description": "Ceci est une awesome task",
+                        "task_creation_date":"2018-10-16 00:12:34",
+                        "task_due_date":"2018-11-20 09:12:34",
+                        "task_status": "DOING"
+                    },
+                    {
+                        "task_id": 4,
+                        "task_name": "My mega task",
+                        "task_description": "Ceci est une mega task",
+                        "task_creation_date":"2018-10-16 00:12:34",
+                        "task_due_date":"2018-11-20 09:12:34",
+                        "task_status": "DOING"
+                    }
+                    ]
+                },
+                {
+                    "block_name": "Pas Urgent/Important",
+                    "block_tasks": [
+                        {
+                            "task_id": 1,
+                            "task_name": "Super task",
+                            "task_description": "Ceci est une super task",
+                            "task_creation_date":"2018-10-16 00:12:34",
+                            "task_due_date":"2018-11-17 09:12:34",
+                            "task_status": "TODO"
+                        }
+                    ]},
+                {
+                    "block_name": "Urgent/Not Important",
+                    "block_tasks": []
+                },
+                {
+                    "block_name": "Not Urgent/Not Important",
+                    "block_tasks": []}
+
+            ]
+            }        
+    ]
+}
