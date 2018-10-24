@@ -1,6 +1,5 @@
 {
     "author": "Dimitri",
-    "mail": "root@ohmyrock.fr",
     "boards": [
         {
             "board_name": "Daily",
@@ -46,7 +45,7 @@
                     ]
                 },
                 {
-                    "block_name": "Pas Urgent/Important",
+                    "block_name": "Not Urgent/Important",
                     "block_tasks": [
                         {
                             "task_id": 1,
@@ -66,6 +65,32 @@
                     "block_tasks": []}
 
             ]
-            }        
+        }
+        {
+            "board_name": "Weekly",
+            "board_type": "eisenhower_matrix",
+            "board_last_update": "2018-10-24 10:21:21",
+            "board_blocks": [
+                {
+                    "block_name": "Urgent/Important",
+                    "block_type": "list",
+                    "block_tasks": []
+                },
+                {
+                    "block_name": "Not Urgent/Important",
+                    "block_tasks": []
+                },
+                {
+                    "block_name": "Urgent/Not Important",
+                    "block_tasks": []
+                },
+                {
+                    "block_name": "Not Urgent/Not Important",
+                    "block_tasks": []
+                }
+
+            ]
+            }  
+
     ]
 }
