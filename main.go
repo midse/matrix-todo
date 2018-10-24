@@ -52,6 +52,12 @@ Examples:
 
 	logger.Println(arguments)
 
+	if arguments["<data-file>"] != nil {
+		dataFile, _ = arguments.String("<data-file>")
+	}
+
+	logger.Printf("Loading data from '%s' file", dataFile)
+
 	content := loadData()
 
 	err = ui.Init()
