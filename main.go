@@ -11,6 +11,8 @@ import (
 	ui "github.com/gizak/termui"
 )
 
+const version = "0.1.0"
+
 var logger *log.Logger
 var parTime *ui.Par
 var dataFile = "./data.json"
@@ -23,9 +25,9 @@ func main() {
 	usage := `Matrix Todo - Simplistic todo list app
 
 Usage:
-	matrix-todo [ (-f|--file) <data-file> ] [ (-e|--encrypt) | (-d|--decrypt)]
-	matrix-todo [ help | -h | --help ]
-	matrix-todo [ version | -v | -V | --version ]
+	matrix-todo [ ((-f|--file) <data-file>) ] [ (-e|--encrypt) | (-d|--decrypt)]
+	matrix-todo help | -h | --help
+	matrix-todo version | -v | -V | --version
 
 Options:
 	-h --help        Show this screen.
@@ -40,6 +42,22 @@ Examples:
 
 	arguments, _ := docopt.ParseDoc(usage)
 
+	displayVersion := false
+
+	for _, item := range []string{"version", "-V", "--version"} {
+		res, err := arguments.Bool(item)
+
+		if err != nil {
+			continue
+		}
+
+		if res {
+			displayVersion = true
+			break
+		}
+
+	}
+
 	logFile, err := os.OpenFile("matrix-todo.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	if err != nil {
@@ -49,8 +67,17 @@ Examples:
 	defer logFile.Close()
 
 	logger = log.New(logFile, "", log.LstdFlags)
-
 	logger.Println(arguments)
+
+	if displayVersion {
+		fmt.Printf("matrix-todo v%s\n", version)
+		os.Exit(0)
+	}
+
+	if help, _ := arguments.Bool("help"); help {
+		fmt.Println(usage)
+		os.Exit(0)
+	}
 
 	if arguments["<data-file>"] != nil {
 		dataFile, _ = arguments.String("<data-file>")
