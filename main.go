@@ -20,6 +20,26 @@ var focusTaskColor = "fg-white,bg-red"
 var focusOnTask = regexp.MustCompile(`\[(.*?)\]\(` + focusTaskColor + `\)`)
 var currentBoard int
 
+func checkMultipleBoolArgs(arguments docopt.Opts, argNames []string) bool {
+	checked := false
+
+	for _, item := range argNames {
+		res, err := arguments.Bool(item)
+
+		if err != nil {
+			continue
+		}
+
+		if res {
+			checked = true
+			break
+		}
+
+	}
+
+	return checked
+}
+
 func main() {
 
 	usage := `Matrix Todo - Simplistic todo list app
@@ -42,21 +62,7 @@ Examples:
 
 	arguments, _ := docopt.ParseDoc(usage)
 
-	displayVersion := false
-
-	for _, item := range []string{"version", "-V", "--version"} {
-		res, err := arguments.Bool(item)
-
-		if err != nil {
-			continue
-		}
-
-		if res {
-			displayVersion = true
-			break
-		}
-
-	}
+	displayVersion := checkMultipleBoolArgs(arguments, []string{"version", "-V", "--version"})
 
 	logFile, err := os.OpenFile("matrix-todo.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
@@ -83,7 +89,8 @@ Examples:
 		dataFile, _ = arguments.String("<data-file>")
 	}
 
-	logger.Printf("Loading data from '%s' file", dataFile)
+	logger.Printf("matrix-todo v%s\n", version)
+	logger.Printf("Loading data from '%s' file\n", dataFile)
 
 	content := loadData()
 
