@@ -260,7 +260,7 @@ func setupHandlers(content Content, rows []*ui.Row, blocks []*ui.List) {
 			blockEvents = false
 		} else {
 			ui.StopLoop()
-			saveData(content)
+			saveData(content, &credentials)
 		}
 	})
 
@@ -269,7 +269,7 @@ func setupHandlers(content Content, rows []*ui.Row, blocks []*ui.List) {
 		if !blockEvents {
 			// press q to quit
 			ui.StopLoop()
-			saveData(content)
+			saveData(content, &credentials)
 		}
 	})
 

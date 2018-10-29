@@ -31,3 +31,9 @@ type Content struct {
 	Author string  `json:"author"`
 	Mail   string  `json:"mail"`
 }
+
+// Credentials type
+type Credentials struct {
+	derivedKey []byte
+	salt       []byte
+}

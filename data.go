@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func saveData(content Content) {
+func saveData(content Content, credentials *Credentials) {
 	bytes, err := json.Marshal(content)
 
 	if err != nil {
@@ -15,10 +15,21 @@ func saveData(content Content) {
 		os.Exit(1)
 	}
 
+	if credentials != nil {
+		stringData, err := encrypt(credentials.derivedKey, string(bytes))
+		bytes = []byte(stringData)
+		bytes = append(credentials.salt, bytes...)
+
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Unable to encrypt data")
+			os.Exit(1)
+		}
+	}
+
 	ioutil.WriteFile(dataFile, bytes, 0644)
 }
 
-func loadData() Content {
+func loadData(credentials *Credentials) Content {
 	var content Content
 
 	jsonData, err := ioutil.ReadFile(dataFile)
@@ -27,6 +38,17 @@ func loadData() Content {
 		fmt.Fprintf(os.Stderr, "Unable to read data file : '%s'\n", dataFile)
 		os.Exit(1)
 	}
+
+	if credentials != nil {
+		stringData, err := decrypt(credentials.derivedKey, string(jsonData[32:]))
+		jsonData = []byte(stringData)
+
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Unable to decrypt data")
+			os.Exit(1)
+		}
+	}
+
 	err = json.Unmarshal(jsonData, &content)
 
 	if err != nil {
@@ -35,4 +57,12 @@ func loadData() Content {
 	}
 
 	return content
+}
+
+func readSaltFromDataFile() []byte {
+	fs, _ := os.Open(dataFile)
+	buff := make([]byte, 32)
+	fs.Read(buff)
+
+	return buff
 }

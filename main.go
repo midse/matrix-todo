@@ -19,26 +19,7 @@ var dataFile = "./data.json"
 var focusTaskColor = "fg-white,bg-red"
 var focusOnTask = regexp.MustCompile(`\[(.*?)\]\(` + focusTaskColor + `\)`)
 var currentBoard int
-
-func checkMultipleBoolArgs(arguments docopt.Opts, argNames []string) bool {
-	checked := false
-
-	for _, item := range argNames {
-		res, err := arguments.Bool(item)
-
-		if err != nil {
-			continue
-		}
-
-		if res {
-			checked = true
-			break
-		}
-
-	}
-
-	return checked
-}
+var credentials Credentials
 
 func main() {
 
@@ -73,7 +54,7 @@ Examples:
 	defer logFile.Close()
 
 	logger = log.New(logFile, "", log.LstdFlags)
-	logger.Println(arguments)
+	// logger.Println(arguments)
 
 	if displayVersion {
 		fmt.Printf("matrix-todo v%s\n", version)
@@ -89,10 +70,44 @@ Examples:
 		dataFile, _ = arguments.String("<data-file>")
 	}
 
+	if toEncrypt, _ := arguments.Bool("--encrypt"); toEncrypt {
+		password := getPassword()
+		derivedKey, salt, err := generateKeyFromPassword(password, nil)
+
+		if err != nil {
+			fmt.Println("Unable to generate key!")
+			os.Exit(1)
+		}
+
+		credentials.derivedKey = derivedKey
+		credentials.salt = salt
+
+		content := loadData(nil)
+		saveData(content, &credentials)
+
+		fmt.Println("Data encrypted! Run again with --decrypt to open your data.")
+		os.Exit(0)
+	}
+
+	if toDecrypt, _ := arguments.Bool("--decrypt"); toDecrypt {
+		password := getPassword()
+
+		salt := readSaltFromDataFile()
+		derivedKey, salt, err := generateKeyFromPassword(password, &salt)
+
+		credentials.derivedKey = derivedKey
+		credentials.salt = salt
+
+		if err != nil {
+			fmt.Println("Unable to generate key!")
+			os.Exit(1)
+		}
+	}
+
 	logger.Printf("matrix-todo v%s\n", version)
 	logger.Printf("Loading data from '%s' file\n", dataFile)
 
-	content := loadData()
+	content := loadData(&credentials)
 
 	err = ui.Init()
 	if err != nil {
