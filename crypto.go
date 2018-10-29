@@ -5,7 +5,6 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"crypto/sha256"
-	"encoding/base64"
 	"errors"
 	"fmt"
 
@@ -45,7 +44,7 @@ func generateKeyFromPassword(password string, salt *[]byte) ([]byte, []byte, err
 	return derivedKey, generatedSalt, nil
 }
 
-func encrypt(key []byte, message string) (encmess string, err error) {
+func encrypt(key []byte, message string) (encmess []byte, err error) {
 	plainText := []byte(message)
 
 	block, err := aes.NewCipher(key)
@@ -70,13 +69,12 @@ func encrypt(key []byte, message string) (encmess string, err error) {
 	cipherText := aesgcm.Seal(nil, nonce, plainText, nil)
 	cipherText = append(nonce, cipherText...)
 
-	//returns to base64 encoded string
-	encmess = base64.StdEncoding.EncodeToString(cipherText)
+	encmess = cipherText
 	return
 }
 
 func decrypt(key []byte, securemess string) (decodedmess string, err error) {
-	cipherText, err := base64.StdEncoding.DecodeString(securemess)
+	cipherText := []byte(securemess)
 	if err != nil {
 		logger.Println(err)
 		return

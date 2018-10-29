@@ -38,6 +38,14 @@ Data encrypted! Run again with --decrypt to read your data.
 + Basic CLI args support
 + Data file encryption support (prototype)
 
+### v0.1.1 (2018-10-29)
+
++ Small display improvement when --encrypt is used
+
+### v0.1.2 (2018-10-29)
+
++ Base64 is not used anymore after encryption
+
 ## Contributing
 
 Feel free to contribute. :)

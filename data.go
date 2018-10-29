@@ -15,10 +15,9 @@ func saveData(content Content, credentials *Credentials) {
 		os.Exit(1)
 	}
 
-	if credentials != nil {
-		stringData, err := encrypt(credentials.derivedKey, string(bytes))
-		bytes = []byte(stringData)
-		bytes = append(credentials.salt, bytes...)
+	if credentials.derivedKey != nil {
+		cipherBytes, err := encrypt(credentials.derivedKey, string(bytes))
+		bytes = append(credentials.salt, cipherBytes...)
 
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Unable to encrypt data")
