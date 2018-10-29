@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"regexp"
@@ -67,6 +68,12 @@ Examples:
 
 	if arguments["<data-file>"] != nil {
 		dataFile, _ = arguments.String("<data-file>")
+	}
+
+	if _, err := os.Stat(dataFile); os.IsNotExist(err) {
+		emptyDataContent := "{\"author\": \"Unknown\", \"boards\": [{\"board_name\": \"My First Matrix\",\"board_type\": \"eisenhower_matrix\",\"board_last_update\": \"\", \"board_blocks\": [{\"block_name\": \"Urgent/Important\",\"block_type\": \"list\", \"block_tasks\": [] },{ \"block_name\": \"Not Urgent/Important\",\"block_tasks\": []},{\"block_name\": \"Urgent/Not Important\",\"block_tasks\": []},{\"block_name\": \"Not Urgent/Not Important\",\"block_tasks\": []}]}]}"
+		bytes := []byte(emptyDataContent)
+		ioutil.WriteFile(dataFile, bytes, 0644)
 	}
 
 	if toEncrypt, _ := arguments.Bool("--encrypt"); toEncrypt {
