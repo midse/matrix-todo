@@ -70,6 +70,8 @@ Examples:
 	}
 
 	if toEncrypt, _ := arguments.Bool("--encrypt"); toEncrypt {
+		fmt.Println("*Warning* This action is irreversible! Your data file will be entirely encrypted.")
+		fmt.Println("Use ctrl+c to abort")
 		password := getPassword()
 		derivedKey, salt, err := generateKeyFromPassword(password, nil)
 

@@ -31,7 +31,7 @@ func checkMultipleBoolArgs(arguments docopt.Opts, argNames []string) bool {
 }
 
 func getPassword() string {
-	inputStr := "Enter Password: "
+	inputStr := "Choose a *strong* password: "
 	fmt.Print(inputStr)
 	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
 	if err != nil {
