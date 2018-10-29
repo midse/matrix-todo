@@ -1,11 +1,34 @@
 language: go
+sudo: false
+matrix:
+  include:
+    - go: 1.11.x
+      env: LATEST=true
 
-os:
-  - linux
-  - windows
+before_install:
+  # gox simplifies building for multiple architectures
+  - go get github.com/mitchellh/gox
 
-go: 
-  - "1.11"
+install:
+  - # skip
 
 script:
-  - go build -ldflags="-s -w" -o "matrix-todo" *.go
+  - go get -t -v ./...
+  - go test -v -race ./...
+  - if [ "${LATEST}" = "true" ]; then gox -os="linux darwin windows" -arch="amd64" -output="matrix-todo.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...; fi
+
+deploy:
+  # provider: releases
+  provider: script
+  skip_cleanup: true
+  script: sleep 1
+  # api_key:
+  #   secure:
+  # file:
+  # - matrix-todo.windows.amd64.exe
+  # - matrix-todo.darwin.amd64
+  # - matrix-todo.linux.amd64
+  # on:
+  #   repo: midse/matrix-todo
+  #   tags: true
+  #   condition: $LATEST = true
