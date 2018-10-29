@@ -1,5 +1,6 @@
 # matrix-todo - Simplistic todo list app (CLI only)
 
+[![Build Status](https://travis-ci.org/midse/matrix-todo.svg?branch=master)](https://travis-ci.org/midse/matrix-todo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/midse/matrix-todo)](https://goreportcard.com/report/github.com/midse/matrix-todo)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/midse)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/midse/matrix-todo/blob/master/LICENSE)
