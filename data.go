@@ -15,7 +15,7 @@ func saveData(content Content, credentials *Credentials) {
 		os.Exit(1)
 	}
 
-	if credentials.derivedKey != nil {
+	if credentials != nil && credentials.derivedKey != nil {
 		cipherBytes, err := encrypt(credentials.derivedKey, string(bytes))
 		bytes = append(credentials.salt, cipherBytes...)
 
@@ -38,7 +38,7 @@ func loadData(credentials *Credentials) Content {
 		os.Exit(1)
 	}
 
-	if credentials != nil {
+	if credentials != nil && credentials.derivedKey != nil {
 		stringData, err := decrypt(credentials.derivedKey, string(jsonData[32:]))
 		jsonData = []byte(stringData)
 

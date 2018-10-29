@@ -26,7 +26,7 @@ func main() {
 	usage := `Matrix Todo - Simplistic todo list app
 
 Usage:
-	matrix-todo [ ((-f|--file) <data-file>) ] [ (-e|--encrypt) | (-d|--decrypt)]
+	matrix-todo [ ((-f|--file) <data-file>) ] [ (-e|--encrypt) ]
 	matrix-todo help | -h | --help
 	matrix-todo version | -v | -V | --version
 
@@ -35,7 +35,6 @@ Options:
 	-v --version     Show version.
 	-f --file        Read/write data to this file (default: ./data.json).
 	-e --encrypt     Encrypt data file using a password.
-	-d --decrypt     Decrypt data file using a password.
 
 Examples:
     # Use a custom location for data and decrypt its content
