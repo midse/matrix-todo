@@ -31,7 +31,8 @@ func checkMultipleBoolArgs(arguments docopt.Opts, argNames []string) bool {
 }
 
 func getPassword() string {
-	fmt.Print("Enter Password: ")
+	inputStr := "Enter Password: "
+	fmt.Print(inputStr)
 	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Unable to read input")
@@ -39,5 +40,8 @@ func getPassword() string {
 	}
 	password := string(bytePassword)
 
+	for i := 0; i < len(inputStr); i++ {
+		fmt.Print("\r")
+	}
 	return strings.TrimSpace(password)
 }

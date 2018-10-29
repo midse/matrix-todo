@@ -11,7 +11,7 @@ import (
 	ui "github.com/gizak/termui"
 )
 
-const version = "0.1.0"
+const version = "0.1.1"
 
 var logger *log.Logger
 var parTime *ui.Par
@@ -85,7 +85,7 @@ Examples:
 		content := loadData(nil)
 		saveData(content, &credentials)
 
-		fmt.Println("Data encrypted! Run again with --decrypt to open your data.")
+		fmt.Println("Data encrypted! Run again with --decrypt to read your data.")
 		os.Exit(0)
 	}
 

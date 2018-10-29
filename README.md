@@ -14,6 +14,13 @@ cp data.example.json data.json
 go run *.go
 ```
 
+Encrypt your data file using AES GCM (key is derived from password using pbkdf2)
+
+```bash
+$ go run *.go --encrypt
+Data encrypted! Run again with --decrypt to read your data.
+```
+
 ## To do
 
 + Task edition : description, due date
@@ -31,4 +38,7 @@ go run *.go
 + Basic CLI args support
 + Data file encryption support (prototype)
 
+## Contributing
+
 Feel free to contribute. :)
+Feedback is always welcome!
