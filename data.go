@@ -65,3 +65,22 @@ func readSaltFromDataFile() []byte {
 
 	return buff
 }
+
+// Quick and *dirty* way to find out if a file is encrypted. Must find a better way to detect encryption.
+func isDataFileEncrypted() bool {
+	var content Content
+
+	jsonData, err := ioutil.ReadFile(dataFile)
+
+	if err != nil {
+		return false
+	}
+
+	err = json.Unmarshal(jsonData, &content)
+
+	if err != nil {
+		return true
+	}
+
+	return false
+}

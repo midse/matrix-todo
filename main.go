@@ -84,11 +84,11 @@ Examples:
 		content := loadData(nil)
 		saveData(content, &credentials)
 
-		fmt.Println("Data encrypted! Run again with --decrypt to read your data.")
+		fmt.Println("Data successfully encrypted! Launch again matrix-todo to open your data.")
 		os.Exit(0)
 	}
 
-	if toDecrypt, _ := arguments.Bool("--decrypt"); toDecrypt {
+	if isDataFileEncrypted() {
 		password := getPassword()
 
 		salt := readSaltFromDataFile()
