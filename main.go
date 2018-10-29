@@ -12,7 +12,7 @@ import (
 	ui "github.com/gizak/termui"
 )
 
-const version = "0.1.3"
+const version = "0.2.0"
 
 var logger *log.Logger
 var parTime *ui.Par
