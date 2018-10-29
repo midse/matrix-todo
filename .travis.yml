@@ -2,33 +2,27 @@ language: go
 sudo: false
 matrix:
   include:
-    - go: 1.11.x
-      env: LATEST=true
-
+  - go: 1.11.x
+    env: LATEST=true
 before_install:
-  # gox simplifies building for multiple architectures
   - go get github.com/mitchellh/gox
-
 install:
   - # skip
-
 script:
   - go get -t -v ./...
   - go test -v -race ./...
   - if [ "${LATEST}" = "true" ]; then gox -os="linux darwin windows" -arch="amd64" -output="matrix-todo.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...; fi
-
 deploy:
-  # provider: releases
-  provider: script
-  skip_cleanup: true
-  script: sleep 1
-  # api_key:
-  #   secure:
-  # file:
-  # - matrix-todo.windows.amd64.exe
-  # - matrix-todo.darwin.amd64
-  # - matrix-todo.linux.amd64
-  # on:
-  #   repo: midse/matrix-todo
-  #   tags: true
-  #   condition: $LATEST = true
+  provider: releases
+  api_key:
+    secure: hmXE8xj6RgSks+3sLGzaNCzQ67U8tXfsbdXnUfYzM0UoMz4k+vrh56DV7cpTwUZlqN/+9norl5fN/8asaxrX8b4RqWRRsgSuU9szbgu7/Cm0V0tX4xOY/EsGD+riZoIuf41/miHGALkHyHKT/bxPRo95ZpDqY9V62OEg0glzX/01jC4pnrUFMpbSu/etPORnZiZYwKSMTjVZkRfVI9bJDslY/hyG76M2L7pMoyLnfomrVlD96Gyhp5F8VQt3qEMSnlbBckHN7zroHxIz7Yxlrel33yf19qmtEfZV8f1fwODwXugBuN9qYkhzYnpzQplkzmnlOLdRdIefCKF6o7x3yZ91f5SBYsiE+SCgkUKUff3Iw6oybGciYYcEv2kfCa6FU0J+8xNcI9+fdqJCAq9pNZtJyv07c5XenjMayyUUO5BI84H1jCuWQfGCVDywhw8DDmYQkeCBGklZ6/TAfkn3ZEtCAAsPnXLFxQdK478AUA3r5BLQgcojJS6LhZ6cquesn7KaNeZXIr1ZiWTv9fMvwpzfhblLSkKpSyfLZXaKx5vN3asi81YQlrGnkon5KZ1+u1shclKvoyq2wO8T4tlZgRyW8Z58tnQckUF3fFJpAZyf3dCnsbQOmSKBbjE56Iwn3p16UwXKuU+mpPqx9NuTSj5YAW4QHgXdPvyBEV8vDV0=
+  file:
+    - matrix-todo.windows.amd64.exe
+    - matrix-todo.darwin.amd64
+    - matrix-todo.linux.amd64
+  on:
+    # What to repository to build
+    repo: midse/matrix-todo
+    # Only build binaries for tagged commits
+    tags: true
+    condition: $LATEST = true
