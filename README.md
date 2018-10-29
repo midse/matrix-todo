@@ -19,10 +19,15 @@ go run *.go
 + Allow scrolling within a block (infinite number of tasks should not be allowed)
 + Allow scrolling when terminal's height is too small
 + Board creation
-+ Handle CLI args
 + Introduce new board types (for now only eisenhower_matrix is supported)
 + Reference task within a commit (custom task id per board?)
 + Monitor n git repositories per board
-+ Encrypt local storage?
+
+## Changelog
+
+### v0.1.0 (2018-10-29)
+
++ Basic CLI args support
++ Data file encryption support (prototype)
 
 Feel free to contribute. :)
