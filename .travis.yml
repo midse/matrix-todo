@@ -11,7 +11,7 @@ install:
 script:
   - go get -t -v ./...
   - go test -v -race ./...
-  - if [ "${LATEST}" = "true" ]; then gox -os="linux darwin windows" -arch="amd64" -output="matrix-todo.." -verbose ./...; fi
+  - if [ "${LATEST}" = "true" ]; then gox -os="linux darwin windows" -arch="amd64" -output="matrix-todo.{{.OS}}.{{.Arch}}" -verbose ./...; fi
 deploy:
   provider: releases
   api_key:
