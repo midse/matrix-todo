@@ -6,3 +6,6 @@ os:
 
 go: 
   - "1.11"
+
+script:
+  - go build -ldflags="-s -w" -o "matrix-todo" *.go
