@@ -250,3 +250,27 @@ func rerender(boardStruct Board, rows []*ui.Row, blocks []*ui.List, focusedBlock
 
 	return rows, blocks
 }
+
+func createNewBoard(boardName string) Board {
+	newBoard := Board{}
+	newBoard.Name = boardName
+	newBoard.Type = "eisenhower_matrix"
+	newBoard.Blocks = []Block{}
+	newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Urgent/Important", Type: "list", Tasks: []Task{}})
+	newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Not Urgent/Important", Type: "list", Tasks: []Task{}})
+	newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Urgent/Not Important", Type: "list", Tasks: []Task{}})
+	newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Not Urgent/Not Important", Type: "list", Tasks: []Task{}})
+
+	return newBoard
+}
+
+func createSimplePopup(popupName string) *ui.Par {
+	popup := ui.NewPar("")
+	popup.Height = 3
+	popup.Width = 50
+	popup.Y = (ui.TermHeight() / 2) - (popup.Height / 2) - 10
+	popup.X = (ui.TermWidth() / 2) - (popup.Width / 2)
+	popup.BorderLabel = popupName
+
+	return popup
+}
