@@ -10,6 +10,7 @@ import (
 func setupHandlers(content Content, rows []*ui.Row, blocks []*ui.List) {
 	blockEvents := false
 	writablePopup := false
+	popupType := ""
 	buffer := ""
 	var popup *ui.Par
 
@@ -17,12 +18,30 @@ func setupHandlers(content Content, rows []*ui.Row, blocks []*ui.List) {
 		if !blockEvents {
 			blockEvents = true
 			writablePopup = true
+			popupType = "NEWTASK"
 			popup = ui.NewPar("")
 			popup.Height = 3
 			popup.Width = 50
 			popup.Y = (ui.TermHeight() / 2) - (popup.Height / 2) - 10
 			popup.X = (ui.TermWidth() / 2) - (popup.Width / 2)
 			popup.BorderLabel = "New task --> " + findCurrentBlock(blocks).BorderLabel
+
+			ui.Render(popup)
+		}
+
+	})
+
+	ui.Handle("n", func(e ui.Event) {
+		if !blockEvents {
+			blockEvents = true
+			writablePopup = true
+			popupType = "NEWBOARD"
+			popup = ui.NewPar("")
+			popup.Height = 3
+			popup.Width = 50
+			popup.Y = (ui.TermHeight() / 2) - (popup.Height / 2) - 10
+			popup.X = (ui.TermWidth() / 2) - (popup.Width / 2)
+			popup.BorderLabel = "New Board"
 
 			ui.Render(popup)
 		}
@@ -115,13 +134,35 @@ func setupHandlers(content Content, rows []*ui.Row, blocks []*ui.List) {
 			} else if e.ID == "<Enter>" {
 				logger.Println("<Enter> received")
 				if buffer[1:] != "" {
-					taskName := buffer[1:]
-					blockName := findCurrentBlock(blocks).BorderLabel
-					content.Boards[currentBoard] = addTask(getCurrentBoard(content), blockName, taskName)
+					taskName := ""
+					blockName := ""
+
+					if popupType == "NEWTASK" {
+						taskName = buffer[1:]
+						blockName = findCurrentBlock(blocks).BorderLabel
+						content.Boards[currentBoard] = addTask(getCurrentBoard(content), blockName, taskName)
+					}
+
+					if popupType == "NEWBOARD" {
+						boardName := buffer[1:]
+						newBoard := Board{}
+						newBoard.Name = boardName
+						newBoard.Type = "eisenhower_matrix"
+						newBoard.Blocks = []Block{}
+						newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Urgent/Important", Type: "list", Tasks: []Task{}})
+						newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Not Urgent/Important", Type: "list", Tasks: []Task{}})
+						newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Urgent/Not Important", Type: "list", Tasks: []Task{}})
+						newBoard.Blocks = append(newBoard.Blocks, Block{Name: "Not Urgent/Not Important", Type: "list", Tasks: []Task{}})
+						content.Boards = append(content.Boards, newBoard)
+
+						// Go to newly created board
+						currentBoard = len(content.Boards) - 1
+					}
 
 					blockEvents = false
 					buffer = ""
 					popup.Text = ""
+					popupType = ""
 					rows, blocks = rerender(getCurrentBoard(content), rows, blocks, blockName, taskName)
 				}
 			} else {
