@@ -28,28 +28,29 @@ Data successfully encrypted! Launch again matrix-todo to open your data.
 
 ## Changelog
 
-### v0.1.0 (2018-10-29)
-
-+ Basic CLI args support
-+ Data file encryption support (prototype)
-
-### v0.1.1 (2018-10-29)
-
-+ Small display improvement when --encrypt is used
-
-### v0.1.2 (2018-10-29)
-
-+ Base64 is not used anymore after encryption
-
-### v0.1.3 (2018-10-29)
-
-+ Provide binaries for Linux, Windows and Osx (feedback needed)
-
 ### v0.2.0 (2018-10-29)
 
 + Remove --decrypt option
 + Detect automatically if data file is encrypted
 + Create an empty data file with a single board when data file doesn't exist
+
+### v0.1.3 (2018-10-29)
+
++ Provide binaries for Linux, Windows and Osx (feedback needed)
+
+### v0.1.2 (2018-10-29)
+
++ Base64 is not used anymore after encryption
+
+### v0.1.1 (2018-10-29)
+
++ Small display improvement when --encrypt is used
+
+### v0.1.0 (2018-10-29)
+
++ Basic CLI args support
++ Data file encryption support (prototype)
+
 
 ## Contributing
 
